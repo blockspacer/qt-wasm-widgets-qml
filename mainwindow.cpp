@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(openNewWindow()));
 
-    this->repaint();
+    //this->repaint();
 }
 
 MainWindow::~MainWindow()

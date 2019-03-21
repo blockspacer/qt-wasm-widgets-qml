@@ -10,7 +10,8 @@
 #define PLATFORM_WASM
 #endif
 
-QMLContainer::QMLContainer(QWidget *parent) :
+QMLContainer::QMLContainer(MainWindow* w, QWidget *parent) :
+mainWindow(w),
 QWidget(parent),
 ui(new Ui::QMLContainer)
 {
@@ -40,7 +41,7 @@ ui(new Ui::QMLContainer)
   view->setSource(QUrl("qrc:/main.qml"));
   ui->gridLayout_2->addWidget(container);
 
-  this->repaint();
+  //this->repaint();
 }
 
 QMLContainer::~QMLContainer()
@@ -50,6 +51,16 @@ QMLContainer::~QMLContainer()
 
 int QMLContainer::reopen_main_window()
 {
+  printf("reopen_main_window\n");
+  hide();
+  view->lower();
+  view->update();
+  view->destroy();
+  mainWindow->raise();
+  mainWindow->showFullScreen();
+  mainWindow->repaint();
+  mainWindow->update();
+  /*
 #ifdef PLATFORM_WASM
   printf("recreate_main_window\n");
   MainWindow w;
@@ -63,7 +74,6 @@ int QMLContainer::reopen_main_window()
   view->close();
   this->update();
   this->repaint();
-  this->close();
   this->update();
   this->repaint();
   parentWidget()->raise();
@@ -71,7 +81,7 @@ int QMLContainer::reopen_main_window()
   parentWidget()->showNormal();
   parentWidget()->update();
   parentWidget()->repaint();
-
   printf("reopen_main_window OK\n");
+  this->close();*/
   return 1;
 }
